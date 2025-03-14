@@ -30,6 +30,7 @@ common_items=(
   "bash_profile:$HOME/.bash_profile"
 )
 
+mkdir $XDG_CONFIG_HOME
 create_symlinks "${common_items[@]}"
 
 # brew packages
