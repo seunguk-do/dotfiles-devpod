@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DOTFILES_DIR="$HOME/Repos/github.com/dotfiles"
+DOTFILES_DIR="$HOME/dotfiles"
 XDG_CONFIG_HOME="$HOME/.config"
 
 create_symlinks() {
