@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DOTFILES_DIR="$HOME/dotfiles"
+DOTFILES_DIR="$HOME/dotfiles-devpod"
 XDG_CONFIG_HOME="$HOME/.config"
 
 create_symlinks() {
