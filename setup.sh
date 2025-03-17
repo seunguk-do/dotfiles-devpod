@@ -22,16 +22,21 @@ create_symlinks() {
   done
 }
 
+mkdir $XDG_CONFIG_HOME
+
 common_items=(
   "zshrc:$HOME/.zshrc"
 )
 
-mkdir $XDG_CONFIG_HOME
 create_symlinks "${common_items[@]}"
 
 curl -o "$HOME/.tmux.conf" https://raw.githubusercontent.com/seunguk-do/dotfiles/main/tmux.conf
 curl -o "$HOME/.bash_profile" https://raw.githubusercontent.com/seunguk-do/dotfiles/main/bash_profile
-curl -o "$XDG_CONFIG_HOME/nvim" https://raw.githubusercontent.com/seunguk-do/dotfiles/main/nvim
+
+mkdir -p "$XDG_CONFIG_HOME/nvim"
+git clone https://github.com/seunguk-do/dotfiles.git "$HOME/temp_dotfiles"
+cp -r "$HOME/temp_dotfiles/nvim/"* "$XDG_CONFIG_HOME/nvim/"
+rm -rf "$HOME/temp_dotfiles"
 
 # brew packages
 mkdir $HOME/.homebrew && curl -L https://github.com/Homebrew/brew/tarball/master | tar xz --strip 1 -C $HOME/.homebrew
