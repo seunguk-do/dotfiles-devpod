@@ -22,8 +22,7 @@ setopt extended_glob null_glob
 
 path=(
     $path                           # Keep existing PATH entries
-    # $HOME/bin
-    # $HOME/.local/bin
+    $HOME/.local/bin
     $SCRIPTS
 )
 
