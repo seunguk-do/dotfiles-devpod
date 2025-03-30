@@ -26,17 +26,12 @@ mkdir $XDG_CONFIG_HOME
 
 common_items=(
   "zshrc:$HOME/.zshrc"
+  "dotfiles/bash_profile:$HOME/.bash_profile"
+  "dotfiles/tmux.conf:$HOME/.tmux.conf"
+  "dotfiles/nvim:$XDG_CONFIG_HOME/nvim"
 )
 
 create_symlinks "${common_items[@]}"
-
-curl -o "$HOME/.tmux.conf" https://raw.githubusercontent.com/seunguk-do/dotfiles/main/tmux.conf
-curl -o "$HOME/.bash_profile" https://raw.githubusercontent.com/seunguk-do/dotfiles/main/bash_profile
-
-mkdir -p "$XDG_CONFIG_HOME/nvim"
-git clone https://github.com/seunguk-do/dotfiles.git "$HOME/temp_dotfiles"
-cp -r "$HOME/temp_dotfiles/nvim/"* "$XDG_CONFIG_HOME/nvim/"
-rm -rf "$HOME/temp_dotfiles"
 
 # brew packages
 mkdir $HOME/.homebrew && curl -L https://github.com/Homebrew/brew/tarball/master | tar xz --strip 1 -C $HOME/.homebrew
@@ -61,7 +56,3 @@ done
 # set up prompt
 mkdir -p "$HOME/.zsh"
 git clone https://github.com/sindresorhus/pure.git "$HOME/.zsh/pure"
-#
-# # devpod
-# curl -L -o devpod "https://github.com/loft-sh/devpod/releases/latest/download/devpod-darwin-arm64" && sudo install -c -m 0755 devpod /usr/local/bin && rm -f devpod
-# devpod use ide none
