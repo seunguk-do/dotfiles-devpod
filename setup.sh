@@ -45,6 +45,7 @@ brew_packages=(
   starship
   neovim
   tmux
+  gh
 )
 
 # Iterate over the array and install each package

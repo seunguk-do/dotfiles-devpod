@@ -22,8 +22,7 @@ setopt extended_glob null_glob
 
 path=(
     $path                           # Keep existing PATH entries
-    # $HOME/bin
-    # $HOME/.local/bin
+    $HOME/.local/bin
     $SCRIPTS
 )
 
@@ -82,7 +81,7 @@ alias dot='cd $GHREPOS/dotfiles'
 
 # ls
 alias ls='ls --color=auto --group-directories-first'
-alias la='ls -lathr --group-directories-first'
+alias la='ls -lah --group-directories-first'
 
 
 # finds all files recursively and sorts by last modification, ignore hidden files
