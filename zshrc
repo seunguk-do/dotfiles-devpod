@@ -7,7 +7,6 @@ set -o vi
 
 export VISUAL=nvim
 export EDITOR=nvim
-export TERM="tmux-256color"
 
 # Directories
 
