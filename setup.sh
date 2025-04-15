@@ -57,3 +57,6 @@ done
 # set up prompt
 mkdir -p "$HOME/.zsh"
 git clone https://github.com/sindresorhus/pure.git "$HOME/.zsh/pure"
+
+# Install TPM (Tmux Plugin Manager)
+git clone https://github.com/tmux-plugins/tpm $HOME/.tmux/plugins/tpm
