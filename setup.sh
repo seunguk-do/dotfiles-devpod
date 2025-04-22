@@ -60,3 +60,9 @@ git clone https://github.com/sindresorhus/pure.git "$HOME/.zsh/pure"
 
 # Install TPM (Tmux Plugin Manager)
 git clone https://github.com/tmux-plugins/tpm $HOME/.tmux/plugins/tpm
+
+tmux start-server &&
+  tmux new-session -d &&
+  sleep 1 &&
+  $HOME/.tmux/plugins/tpm/bin/install_plugins &&
+  tmux kill-server
