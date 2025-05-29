@@ -3,60 +3,39 @@
 DOTFILES_DIR="$HOME/dotfiles-devpod"
 XDG_CONFIG_HOME="$HOME/.config"
 
-create_symlinks() {
-  local items=("$@")
-  for item in "${items[@]}"; do
-    IFS=':' read -r source target <<<"$item"
-    if [ -L "$target" ]; then
-      echo "Removing existing symlink $target"
-      unlink "$target"
-    elif [ -d "$target" ]; then
-      echo "Warning: $target is a directory. Skipping..."
-      continue
-    elif [ -e "$target" ]; then
-      echo "Warning: $target already exists. Skipping..."
-      continue
-    fi
-    ln -s "$DOTFILES_DIR/$source" "$target"
-    echo "Created symlink for $source"
-  done
-}
-
-mkdir $XDG_CONFIG_HOME
-
-common_items=(
-  "zshrc:$HOME/.zshrc"
-  "dotfiles/bash_profile:$HOME/.bash_profile"
-  "dotfiles/tmux.conf:$HOME/.tmux.conf"
-  "dotfiles/nvim:$XDG_CONFIG_HOME/nvim"
-)
-
-create_symlinks "${common_items[@]}"
-
-# brew packages
+# Install Homebrew
 mkdir $HOME/.homebrew && curl -L https://github.com/Homebrew/brew/tarball/master | tar xz --strip 1 -C $HOME/.homebrew
 
-brew_packages=(
-  fd
-  ripgrep
-  lazygit
-  fzf
-  direnv
-  starship
-  neovim
-  tmux
-  gh
-)
+# Install packages
+packages=(fd ripgrep lazygit fzf neovim tmux gh)
 
-# Iterate over the array and install each package
-for package in "${brew_packages[@]}"; do
-  echo "Installing $package..."
-  $HOME/.homebrew/bin/brew install "$package"
+for pkg in "${packages[@]}"; do
+  $BREW install "$pkg"
 done
 
-# set up prompt
-mkdir -p "$HOME/.zsh"
-git clone https://github.com/sindresorhus/pure.git "$HOME/.zsh/pure"
+# Install Pure prompt
+[ ! -d "$HOME/.zsh/pure" ] && {
+  mkdir -p "$HOME/.zsh"
+  git clone https://github.com/sindresorhus/pure.git "$HOME/.zsh/pure"
+}
 
-# Install nvm
+# Install tools
+curl -sfL https://direnv.net/install.sh | bash
+curl -LsSf https://astral.sh/uv/install.sh | sh
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+
+# Install Blender
+BLENDER_VERSION=4.4.3
+wget -O- https://download.blender.org/release/Blender${BLENDER_VERSION%.*}/blender-${BLENDER_VERSION}-linux-x64.tar.xz | tar -xJ -C $HOME/.local/lib
+ln -sf $HOME/.local/lib/blender-${BLENDER_VERSION}-linux-x64/blender $HOME/.local/bin/blender
+
+# Create symlinks
+create_symlink() {
+  [ -L "$3" ] && unlink "$2"
+  [ ! -e "$2" ] && ln -s "$DOTFILES_DIR/$1" "$2" && echo "Created symlink for $1"
+}
+
+create_symlink "dotfiles/tmux.conf" "$HOME/.tmux.conf"
+create_symlink "dotfiles/nvim" "$XDG_CONFIG_HOME/nvim"
+create_symlink "dotfiles/bash_profile" "$HOME/.bash_profile"
+create_symlink "zshrc" "$HOME/.zshrc"
