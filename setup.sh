@@ -2,9 +2,13 @@
 
 DOTFILES_DIR="$HOME/dotfiles-devpod"
 XDG_CONFIG_HOME="$HOME/.config"
+BREW="$HOME/.homebrew/bin/brew"
 
 # Install Homebrew
-mkdir $HOME/.homebrew && curl -L https://github.com/Homebrew/brew/tarball/master | tar xz --strip 1 -C $HOME/.homebrew
+if [ ! -d "$HOME/.homebrew" ]; then
+  mkdir -p $HOME/.homebrew
+  curl -L https://github.com/Homebrew/brew/tarball/master | tar xz --strip 1 -C $HOME/.homebrew
+fi
 
 # Install packages
 packages=(fd ripgrep lazygit fzf neovim tmux gh)
