@@ -11,7 +11,7 @@ if [ ! -d "$HOME/.homebrew" ]; then
 fi
 
 # Install packages
-packages=(fd ripgrep lazygit fzf neovim tmux gh)
+packages=(fd ripgrep lazygit fzf neovim tmux gh zsh-vi-mode)
 
 for pkg in "${packages[@]}"; do
   $BREW install "$pkg"
